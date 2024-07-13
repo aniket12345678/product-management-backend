@@ -14,4 +14,21 @@ function multerFn(data) {
     return multer({ storage: storage });
 }
 
-module.exports = { multerFn } 
+const operationHandler = {
+    handleSuccess: (res, data, message) => {
+        return res.status(200).send({
+            message: message,
+            data: data,
+            code: 200
+        });
+    },
+    handleError: (res, message, error) => {
+        console.log(message, error);
+        return res.status(500).send({
+            message: message,
+            code: 500
+        });
+    }
+}
+
+module.exports = { multerFn, operationHandler }
