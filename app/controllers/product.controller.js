@@ -21,14 +21,15 @@ const add = async (req, res) => {
 
 const update = async (req, res) => {
     try {
-        console.log('this is an update function');
-        console.log('req.body:- ', req.body);
-        return false;
-        const store = req.body;
+        const store = JSON.parse(req.body.data);
         if (req.file) {
             store.attachments = req.file.filename
         }
-        const fetchSingleProduct = await productModel.update(store, { where: { id: store.id } });
+        await productModel.update(store, { where: { id: store.id } });
+        return res.status(200).send({
+            message: 'product updated successfully',
+            code: 200
+        });
     } catch (error) {
         console.log('product add error:- ', error);
         return res.status(500).send({
@@ -74,9 +75,7 @@ const findAll = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
     try {
-        console.log('this is an findAll function');
-        console.log('req.body:- ', req.body);
-        const data = await productModel.destroy({ where: { id: req.body.id }, force: true });
+        await productModel.destroy({ where: { id: req.body.id }, force: true });
         return res.status(200).send({
             message: 'product deleted successfully',
             code: 200
