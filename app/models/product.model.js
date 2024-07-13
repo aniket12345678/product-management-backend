@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const { newConnection } = require("../config/connecion");
+const { newConnection } = require("../config/connection");
 
 const productModel = newConnection.define('db_product', {
     id: {
@@ -27,7 +27,7 @@ const productModel = newConnection.define('db_product', {
 
 
 productModel.sync().then((result) => {
-    console.log('productModel created successfully');
+    // console.log('productModel created successfully');
 }).catch((err) => {
     console.log(err);
 });
